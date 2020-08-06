@@ -31,5 +31,7 @@
 # Temporary Files of Office
 **/~*
 
-
+# VSCode Configuration
+/.vscode
+/.vscode/**
 
