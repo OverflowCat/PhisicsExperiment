@@ -7,14 +7,14 @@ sys.path.append("../..")
 from GeneralMethod.PyCalcLib import Fitting, Method
 from GeneralMethod.Report import Report
 
-
 class Elastic_Modulus:
-    PREVIEW_FILENAME = "Preview.pdf"
-    DATA_SHEET_FILENAME = "data.xlsx"
-    REPORT_TEMPLATE_FILENAME = "Elastic_Modulus_empty.docx"  # 实验报告模板（未填数据）的名称
-    REPORT_OUTPUT_FILENAME = "../../Report/Experiment1/1011Report.docx"  # 最后生成实验报告的相对路径
+    def __init__(self, cwd=""): # 初始化实验类时给一个路径参数
 
-    def __init__(self):
+        self.PREVIEW_FILENAME = cwd + "Preview.pdf"
+        self.DATA_SHEET_FILENAME = cwd + "data.xlsx"
+        self.REPORT_TEMPLATE_FILENAME = cwd + "Elastic_Modulus_empty.docx"  # 实验报告模板（未填数据）的名称
+        self.REPORT_OUTPUT_FILENAME = cwd + "../../Report/Experiment1/1011Report.docx"  # 最后生成实验报告的相对路径
+
         self.data = {}
         self.uncertainty = {}
         self.report_data = {}
