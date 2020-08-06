@@ -7,7 +7,8 @@ from numpy import sqrt, abs
 import sys
 sys.path.append('../..') # 如果最终要从main.py调用，则删掉这句
 from GeneralMethod.PyCalcLib import Method,Fitting
-from reportwriter.ReportWriter import ReportWriter
+# from reportwriter.ReportWriter import ReportWriter
+from GeneralMethod.Report import Report
 
 
 
