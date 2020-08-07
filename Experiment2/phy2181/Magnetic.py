@@ -14,15 +14,15 @@ from GeneralMethod.Report import Report
 class Magnetic:
     def __init__(self, cwd=""): # 初始化实验类时给一个路径参数
         
-
+        self.cwd = cwd
         self.PREVIEW_FILENAME = cwd + "Preview.pdf"
         self.DATA_SHEET_FILENAME = cwd + "data.xlsx"
         self.REPORT_TEMPLATE_FILENAME = cwd + "Magnetic_empty.docx"  # 实验报告模板（未填数据）的名称
         self.REPORT_OUTPUT_FILENAME = cwd + "../../Report/Experiment1/2181Report.docx"  # 最后生成实验报告的相对路径
 
         self.data = {}
-        self.uncertainty = {}
         self.report_data = {}
+        self.report_pics = {} # 本实验报告里有图片
 
         print("2181 磁阻传感器和磁场测量\n1. 实验预习\n2. 数据处理")
         while True:
@@ -132,7 +132,6 @@ class Magnetic:
         y = self.data['list_2_1_BxGauss']
         # fun = interpolate.interp1d(x, y, kind='quadratic')
         fargs = polyfit(x, y, 2)
-        print(fargs)
         fun = lambda x : fargs[2] + fargs[1] * x + fargs[0] * (x**2)
         _x = linspace(min(x),max(x))
         _y = fun(_x)
@@ -174,9 +173,15 @@ class Magnetic:
         self.report_data['1_1_sen'] = "%e" % self.data['sen']
         self.report_data['1_2_cosA'] = "%.3f" % self.data['list_1_2_V'][0]
 
+        # 插入图片
+        self.report_pics['Graph-1-1'] = self.cwd + "1_1.jpg"
+        self.report_pics['Graph-1-2'] = self.cwd + "1_2.jpg"
+        self.report_pics['Graph-2-1'] = self.cwd + "2_1.jpg"
+
         # 输出Word
         RW = Report()
         RW.load_replace_kw(self.report_data)
+        RW.load_insert_pic(self.report_pics)
         RW.fill_report(self.REPORT_TEMPLATE_FILENAME, self.REPORT_OUTPUT_FILENAME)
 
     
