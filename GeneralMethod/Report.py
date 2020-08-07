@@ -37,7 +37,7 @@ class Report:
             # Select the Key
             word.Selection.Find.Execute( '#'+pic_key+'#' ,False,False,False,False,False,True,client.constants.wdFindContinue,False,"",client.constants.wdReplaceNone)
             # Replace the key with the picture
-            word.Selection.InlineShapes.AddPicture(self.insert_pics[pic_key])
+            word.Selection.InlineShapes.AddPicture(os.getcwd() + "/" + self.insert_pics[pic_key])
         doc.Close()
         word.Quit()
 
