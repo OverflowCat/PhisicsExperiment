@@ -1,10 +1,11 @@
 import xlrd
 import os, shutil, sys
-from numpy import sqrt, asarray, linspace, arange
+from numpy import sqrt, asarray, linspace, arange, cos, pi, polyfit
 from matplotlib import pyplot as plt
 import matplotlib
 matplotlib.use("Agg")
 from scipy import interpolate
+from scipy.optimize import curve_fit
 
 sys.path.append("../..")
 from GeneralMethod.PyCalcLib import Method, Fitting
@@ -41,14 +42,15 @@ class Magnetic:
             print("现在开始数据处理")
             print("即将打开数据输入文件......")
             # 打开数据输入文件
-            Method.start_file(self.DATA_SHEET_FILENAME)
+            # Method.start_file(self.DATA_SHEET_FILENAME)
             input("输入数据完成后请保存并关闭excel文件，然后按回车键继续")
             # 从excel中读取数据
             self.input_data("./"+self.DATA_SHEET_FILENAME) # './' is necessary when running this file, but should be removed if run main.py
             print("数据读入完毕，处理中......")
             # 计算物理量
             self.calc_data()
-
+            # 画图
+            self.draw_graph()
             print("正在生成实验报告......")
             # 生成实验报告
             self.fill_report()
@@ -117,24 +119,28 @@ class Magnetic:
         # 第二个表格
         x = self.data['list_1_2_angle']
         y = self.data['list_1_2_V']
-        fun = interpolate.interp1d(x, y, kind='cubic')
+        # fun = interpolate.interp1d(x, y, kind='quadratic')
+        fun = lambda x, a: a * cos(pi * x / 180)
+        popt, pcov = curve_fit(fun, x, y)
         _x = linspace(min(x), max(x))
-        _y = fun(_x)
+        _y = fun(_x, popt[0])
         plt.clf()
         plt.plot(_x, _y)
         plt.savefig("1_2.jpg")
         # 第三个表格
         x = arange(-5, 6) / 10
         y = self.data['list_2_1_BxGauss']
-        fun = interpolate.interp1d(x, y, kind='cubic')
+        # fun = interpolate.interp1d(x, y, kind='quadratic')
+        fargs = polyfit(x, y, 2)
+        print(fargs)
+        fun = lambda x : fargs[2] + fargs[1] * x + fargs[0] * (x**2)
         _x = linspace(min(x),max(x))
         _y = fun(_x)
         plt.clf()
+        plt.scatter(x, y)
         plt.plot(_x,_y)
         plt.savefig("2_1.jpg")
         # Finished
-
-
 
     def fill_report(self):
         # 填充一行表格, 参数: word中键的格式(如: "a_%d", 包含一个%d位置); 数据(数组)名称
@@ -163,6 +169,11 @@ class Magnetic:
         # 最后一个地磁场表格
         list_3 = self.data['list_3']
         self.report_data['3_u1'], self.report_data['3_u2'], self.report_data['3_u'], self.report_data['3_B'] = ["%.3f" % _i for _i in list_3]
+        
+        # 其他的单个数据
+        self.report_data['1_1_sen'] = "%e" % self.data['sen']
+        self.report_data['1_2_cosA'] = "%.3f" % self.data['list_1_2_V'][0]
+
         # 输出Word
         RW = Report()
         RW.load_replace_kw(self.report_data)
