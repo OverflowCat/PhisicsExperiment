@@ -6,7 +6,7 @@
 **/venv/
 
 # ide configures
-/.idea
+**/.idea/
 
 # useless files
 
