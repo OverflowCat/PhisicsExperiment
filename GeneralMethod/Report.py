@@ -11,9 +11,14 @@ demo_replace_dict = {
 class Report:
     def __init__(self):
         self.replace_words = {}
+        self.insert_pics = {}
+        
 
     def load_replace_kw(self, rep: dict) :
         self.replace_words = rep
+    
+    def load_insert_pic(self, pic: dict) :
+        self.insert_pics = pic
 
     def fill_report(self, in_fname, out_fname):
         shutil.copy(in_fname, out_fname) # need full name
@@ -23,9 +28,16 @@ class Report:
         doc = word.Documents.Open(os.getcwd() + "/" + out_fname)
         word.Selection.Find.ClearFormatting()
         word.Selection.Find.Replacement.ClearFormatting()
+        # Replace Text
         for rep_key in self.replace_words.keys():
             # print("Replacing #%s# to %s" % (rep_key, self.replace_words[rep_key]))
             word.Selection.Find.Execute( '#'+rep_key+'#' ,False,False,False,False,False,True,client.constants.wdFindContinue,False,self.replace_words[rep_key],client.constants.wdReplaceAll)
+        # Insert Picture
+        for pic_key in self.insert_pics.keys():
+            # Select the Key
+            word.Selection.Find.Execute( '#'+pic_key+'#' ,False,False,False,False,False,True,client.constants.wdFindContinue,False,"",client.constants.wdReplaceNone)
+            # Replace the key with the picture
+            word.Selection.InlineShapes.AddPicture(self.insert_pics[pic_key])
         doc.Close()
         word.Quit()
 
