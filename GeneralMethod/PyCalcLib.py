@@ -689,7 +689,7 @@ class Method:
         unc_final, pwr = Method.scientific_notation(unc)
         res_final = round(res / float(10 ** pwr), 0)
         unc_final = round(unc_final, 0)
-        if 0 > pwr > -4:
+        if 4 > pwr > -4:
             res_final = round(res_final * (10 ** pwr), -pwr)
             unc_final = round(unc_final * (10 ** pwr), -pwr)
             # 3.340 + 0.002 要保留3.340小数第三位的0
