@@ -157,7 +157,7 @@ class Photoelectic:
     @staticmethod
     def calc_uncertainty2(data_list, result_list):
         k = result_list['k']
-        u_k = k * sqrt((1 / result_list['r'] - 1) / (len(data_list['theta']) - 2))
+        u_k = k * sqrt((1 / (result_list['r'] ** 2) - 1) / (len(data_list['theta']) - 2))
         u_delta = abs(u_k) / sqrt((1 - k) * k) / 2 / pi * 360
         delta_final = Method.final_expression(result_list['delta'], u_delta)
         uncertain_data = {'u_k': u_k, 'u_delta': u_delta, 'delta_final': delta_final}
