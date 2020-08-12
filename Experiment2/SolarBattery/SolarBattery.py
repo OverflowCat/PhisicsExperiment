@@ -48,4 +48,4 @@ class SolarBattery:
 
 
 if __name__ == "__main__":
-    show("in.xlsx", "out.xlsx")
+    SolarBattery().show()
