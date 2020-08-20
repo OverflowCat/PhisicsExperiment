@@ -1,5 +1,4 @@
 import xlrd
-# from xlutils.copy import copy as xlscopy
 import shutil
 import os
 from numpy import sqrt, abs
@@ -8,7 +7,7 @@ import subprocess
 import sys
 sys.path.append('../..') # 如果最终要从main.py调用，则删掉这句
 from GeneralMethod.PyCalcLib import Method,InstrumentError
-#from GeneralMethod.Report import Report
+from GeneralMethod.Report import Report
 
 # 求电阻箱每一级的示数
 def calc_r(num_R):
@@ -241,6 +240,7 @@ class Potentiometer:
         # 最终结果
         self.report_data['final_1'] = self.data['final_1']
         # 将各个变量以及不确定度的结果导入实验报告，在实际编写中需根据实验报告的具体要求设定保留几位小数
+        self.report_data['E_N'] = "%.4f" % self.data['num_E_N']
         self.report_data['E_x'] = "%.4f" % self.data['num_E_x']
         self.report_data['dt_R_11'] = "%.3f" % self.data['num_dt_R_11']
         self.report_data['dt_R_21'] = "%.3f" % self.data['num_dt_R_21']
@@ -271,7 +271,7 @@ class Potentiometer:
         self.report_data['dt_U_x'] = "%.6f" % self.data['num_dt_U_x']
         self.report_data['du_U_x'] = "%.7f" % self.data['num_u_U_x']
         self.report_data['u_Rx_Rx'] = "%.6f" % self.data['num_u_Rx_Rx']
-        self.report_data['u_R_x'] = "%.2f" % self.data['num_u_U_x']
+        self.report_data['u_R_x'] = "%.2f" % self.data['num_u_R_x']
         # 调用ReportWriter类
         RW = Report()
         RW.load_replace_kw(self.report_data)
