@@ -2,7 +2,8 @@
 
 # 基物实验1
 import Experiment1.phy1011.Elastic_Modulus as Phy1_1011_1
-
+import Experiment1.phy1071.Spectrometer as Phy1_1071_1
+import Experiment1.phy1082.Sodium as Phy1_1082_1
 import Experiment1.phy1091.Michelson as Phy1_1091_1
 import Experiment1.phy1091.NewtonRing as Phy1_1091_2
 # 基物实验2
@@ -20,6 +21,8 @@ if __name__ == '__main__':
 		if term == "1":
 			print("目前基物实验1中可计算的实验：")
 			print("\t弹性模量实验（1011）")
+            print("\t分光仪实验（1071）")
+            print("\t钠光干涉实验（1082）")
 			print("\t光的分振幅法干涉实验（1091）")
 			exp = input("请输入实验序号：").strip()
 			if exp == "1011":
@@ -28,6 +31,22 @@ if __name__ == '__main__':
 				eidx = input("请输入子实验序号").strip()
 				if eidx == "1":
 					Phy1_1011_1.Elastic_Modulus(cwd="Experiment1/phy1011/")
+				else:
+					print("很抱歉。暂时没有相应的数据处理程序。")
+            if exp == "1071":
+				print("\t该模块内目前包括的子实验：")
+				print("\t\t1. 三棱镜及折射率")
+				eidx = input("请输入子实验序号").strip()
+				if eidx == "1":
+					Phy1_1071_1.Spectrometer(cwd="Experiment1/phy1071/")
+				else:
+					print("很抱歉。暂时没有相应的数据处理程序。")
+            if exp == "1082":
+				print("\t该模块内目前包括的子实验：")
+				print("\t\t1. 钠光干涉")
+				eidx = input("请输入子实验序号").strip()
+				if eidx == "1":
+					Phy1_1082_1.Sodium(cwd="Experiment1/phy1082/")
 				else:
 					print("很抱歉。暂时没有相应的数据处理程序。")
 			elif exp == "1091":
