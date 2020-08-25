@@ -33,7 +33,7 @@ if __name__ == '__main__':
 					Phy1_1011_1.Elastic_Modulus(cwd="Experiment1/phy1011/")
 				else:
 					print("很抱歉。暂时没有相应的数据处理程序。")
-            if exp == "1071":
+            elif exp == "1071":
 				print("\t该模块内目前包括的子实验：")
 				print("\t\t1. 三棱镜及折射率")
 				eidx = input("请输入子实验序号").strip()
@@ -41,7 +41,7 @@ if __name__ == '__main__':
 					Phy1_1071_1.Spectrometer(cwd="Experiment1/phy1071/")
 				else:
 					print("很抱歉。暂时没有相应的数据处理程序。")
-            if exp == "1082":
+            elif exp == "1082":
 				print("\t该模块内目前包括的子实验：")
 				print("\t\t1. 钠光干涉")
 				eidx = input("请输入子实验序号").strip()
