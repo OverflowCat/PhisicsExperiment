@@ -28,6 +28,9 @@
 # Reports
 /Report
 
+# Previews
+**/Preview.docx
+
 # Temporary Files of Office
 **/~*
 
@@ -35,3 +38,5 @@
 /.vscode
 /.vscode/**
 
+# other
+**/.keep

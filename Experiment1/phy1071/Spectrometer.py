@@ -14,12 +14,12 @@ class Spectrometer:
     # 需往实验报告中填的空的key，这些key在Word模板中以#号包含，例如#1#, #delta_d#, #final#
     report_data_keys = []
 
-    PREVIEW_FILENAME = "Preview.pdf"  # 预习报告模板文件的名称
-    DATA_SHEET_FILENAME = "data.xlsx"  # 数据填写表格的名称
-    REPORT_TEMPLATE_FILENAME = "Spectrometer_empty.docx"  # 实验报告模板（未填数据）的名称
-    REPORT_OUTPUT_FILENAME = "Spectrometer_out.docx"  # 最后生成实验报告的相对路径
+    def __init__(self, cwd=""):
+        self.PREVIEW_FILENAME = cwd + "Preview.pdf"  # 预习报告模板文件的名称
+        self.DATA_SHEET_FILENAME = cwd + "data.xlsx"  # 数据填写表格的名称
+        self.REPORT_TEMPLATE_FILENAME = cwd + "Spectrometer_empty.docx"  # 实验报告模板（未填数据）的名称
+        self.REPORT_OUTPUT_FILENAME = cwd + "../../Report/Experiment1/1071Report.docx"  # 最后生成实验报告的相对路径
 
-    def __init__(self):
         self.data = {}  # 存放实验中的各个物理量
         self.uncertainty = {}  # 存放物理量的不确定度
         self.report_data = {}  # 存放需要填入实验报告的

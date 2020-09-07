@@ -28,7 +28,7 @@ class RMeasure:
         self.PREVIEW_FILENAME = cwd + "Preview.pdf"
         self.DATA_SHEET_FILENAME = cwd + "data.xlsx"
         self.REPORT_TEMPLATE_FILENAME = cwd + "RMeasure_empty.docx"
-        self.REPORT_OUTPUT_FILENAME = cwd + "../../Report/Experiment1/RMeasure_out.docx"
+        self.REPORT_OUTPUT_FILENAME = cwd + "../../Report/Experiment1/1041Report.docx"
 
         self.data = {}  # 存放实验中的各个物理量
         self.uncertainty = {}  # 存放物理量的不确定度
@@ -124,7 +124,7 @@ class RMeasure:
         self.data['num_rx'] = num_rx
         self.data['num_ua_b'] = num_ua_b
         self.data['num_u_rx'] = num_u_rx
-        self.data['str_fin_rx'] = "%.0f±%.0f" % (num_fin_rx, num_u_rx_1bit)
+        self.data['str_fin_rx'] = Method.final_expression(num_fin_rx, num_u_rx_1bit)
 
         # 实验二
         num_2r1 = self.data['list_2'][0]

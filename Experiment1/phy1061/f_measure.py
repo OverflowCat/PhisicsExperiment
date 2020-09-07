@@ -5,9 +5,8 @@ import os
 
 
 import sys
-sys.path.append('../..') # 如果最终要从main.py调用，则删掉这句
 from GeneralMethod.PyCalcLib import Method
-from reportwriter.ReportWriter import ReportWriter
+from GeneralMethod.Report import Report
 
 class f_measure:
      # 需往实验报告中填的空的key，这些key在Word模板中以#号包含，例如#1#, #delta_d#, #final#
@@ -33,15 +32,15 @@ class f_measure:
 
     ]
 
-    PREVIEW_FILENAME = "Preview.pdf"
-    DATA_SHEET_FILENAME = "data.xlsx"
-    REPORT_TEMPLATE_FILENAME = "f_measure_empty.docx"
-    REPORT_OUTPUT_FILENAME = "f_measure_out.docx"
+    def __init__(self, cwd=""):
+        self.PREVIEW_FILENAME = cwd + "Preview.pdf"
+        self.DATA_SHEET_FILENAME = cwd + "data.xlsx"
+        self.REPORT_TEMPLATE_FILENAME = cwd + "f_measure_empty.docx"
+        self.REPORT_OUTPUT_FILENAME = cwd + "../../Report/Experiment1/1061Report.docx"
 
-    def __init__(self):
         self.data = {} # 存放实验中的各个物理量
         self.report_data = {} # 存放需要填入实验报告的
-        print("1061  物距像距法测透镜焦距\n1. 实验预习\n2. 数据处理")
+        print("1061 物距像距法测透镜焦距\n1. 实验预习\n2. 数据处理")
         while True:
             try:
                 oper = input("请选择: ").strip()
@@ -54,15 +53,15 @@ class f_measure:
         if oper == '1':
             print("现在开始实验预习")
             print("正在打开预习报告......")
-            os.startfile(self.PREVIEW_FILENAME)
+            Method.start_file(self.PREVIEW_FILENAME)
         elif oper == '2':
             print("现在开始数据处理")
             print("即将打开数据输入文件......")
             # 打开数据输入文件
-            os.startfile(self.DATA_SHEET_FILENAME)
+            Method.start_file(self.DATA_SHEET_FILENAME)
             input("输入数据完成后请保存并关闭excel文件，然后按回车键继续")
             # 从excel中读取数据
-           self.input_data("./"+self.DATA_SHEET_FILENAME) # './' is necessary when running this file, but should be removed if run main.py
+            self.input_data(self.DATA_SHEET_FILENAME) # './' is necessary when running this file, but should be removed if run main.py
             print("数据读入完毕，处理中......")
             # 计算物理量
             self.calc_data_1()
@@ -76,12 +75,11 @@ class f_measure:
             # 生成实验报告
             self.fill_report()
             print("实验报告生成完毕，正在打开......")
-            os.startfile(self.REPORT_OUTPUT_FILENAME)
+            Method.start_file(self.REPORT_OUTPUT_FILENAME)
             print("Done!")
 
-
     def input_data(self, filename):
-        ws = xlrd.open_workbook(filename).sheet_by_name('f_measure')
+        ws = xlrd.open_workbook(filename).sheet_by_name('Sheet1')
 
         #1061_1
         list_u_1 = []
@@ -139,13 +137,6 @@ class f_measure:
 
         #1061_4
 
-
-
-        
-
-
-    
-   
     def calc_data_1(self):
         self.data['f_1'] = f_1
         self.data['list_f1'] = list_f1
@@ -234,16 +225,15 @@ class f_measure:
         for i, list_b_i in enumerate(self.data['list_b']):
             self.report_data[b_(i + 1)] = "%.1f" % (list_b_i)
         for i, list_3_f_i in enumerate(self.data['list_3_f']):
-            self.report_data[3_f_(i + 1)] = "%.1f" % (list_3_f_i)
+            self.report_data['3_f_' + str(i + 1)] = "%.1f" % (list_3_f_i)
         self.report_data['final_3_f'] = "%.1f" % self.data['final_3_f']
         self.report_data['u_3_f'] = "%.3f" % self.data['u_3_f']
 
         #1061_4
 
-        
 
         # 调用ReportWriter类
-        RW = ReportWriter()
+        RW = Report()
         RW.load_replace_kw(self.report_data)
         RW.fill_report(self.REPORT_TEMPLATE_FILENAME, self.REPORT_OUTPUT_FILENAME)
 

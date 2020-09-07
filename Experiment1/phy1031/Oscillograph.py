@@ -5,7 +5,6 @@ import os
 from numpy import sqrt, abs
 
 import sys
-sys.path.append('../..') # 如果最终要从main.py调用，则删掉这句
 from GeneralMethod.PyCalcLib import Method,Fitting
 # from reportwriter.ReportWriter import ReportWriter
 from GeneralMethod.Report import Report
@@ -24,12 +23,12 @@ class Oscillograph:
         "c","u_c_c","u_c","fin_c"
     ]
 
-    PREVIEW_FILENAME = "Preview.pdf"
-    DATA_SHEET_FILENAME = "data.xlsx"
-    REPORT_TEMPLATE_FILENAME = "Oscillograph_empty.docx"
-    REPORT_OUTPUT_FILENAME = "Oscillograph_out.docx"
+    def __init__(self, cwd=""):
+        self.PREVIEW_FILENAME = cwd + "Preview.pdf"
+        self.DATA_SHEET_FILENAME = cwd + "data.xlsx"
+        self.REPORT_TEMPLATE_FILENAME = cwd + "Oscillograph_empty.docx"
+        self.REPORT_OUTPUT_FILENAME = cwd + "../../Report/Experiment1/1031Report.docx"
 
-    def __init__(self):
         self.data = {} # 存放实验中的各个物理量
         self.uncertainty = {} # 存放物理量的不确定度
         self.report_data = {} # 存放需要填入实验报告的
@@ -46,12 +45,12 @@ class Oscillograph:
         if oper == '1':
             print("现在开始实验预习")
             print("正在打开预习报告......")
-            os.startfile(self.PREVIEW_FILENAME)
+            Method.start_file(self.PREVIEW_FILENAME)
         elif oper == '2':
             print("现在开始数据处理")
             print("即将打开数据输入文件......")
             # 打开数据输入文件
-            os.startfile(self.DATA_SHEET_FILENAME)
+            Method.start_file(self.DATA_SHEET_FILENAME)
             input("输入数据完成后请保存并关闭excel文件，然后按回车键继续")
             # 从excel中读取数据
             self.input_data("./"+self.DATA_SHEET_FILENAME) # './' is necessary when running this file, but should be removed if run main.py
@@ -64,7 +63,7 @@ class Oscillograph:
             # 生成实验报告
             self.fill_report()
             print("实验报告生成完毕，正在打开......")
-            os.startfile(self.REPORT_OUTPUT_FILENAME)
+            Method.start_file(self.REPORT_OUTPUT_FILENAME)
             print("Done!")
 
     def input_data(self, filename):
@@ -179,7 +178,7 @@ class Oscillograph:
         self.report_data['u_d'] = "%.4f" % self.data['num_u_d']
         self.report_data['u_lbd'] = "%.4f" % self.data['num_u_lbd']
         # 调用ReportWriter类
-        RW = ReportWriter()
+        RW = Report()
         RW.load_replace_kw(self.report_data)
         RW.fill_report(self.REPORT_TEMPLATE_FILENAME, self.REPORT_OUTPUT_FILENAME)
 
