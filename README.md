@@ -43,11 +43,9 @@
 <div  align="center">    
 <img src="/pics/pic2.png" width = 800 height = 500 />
 </div>
+                                                  程序操作流程图
 
-                                             程序操作流程图
-
-
-
+<center>这一行需要居中</center>
 ## 版本
 
 当前版本号：v1.0.0
