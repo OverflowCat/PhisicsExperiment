@@ -44,8 +44,7 @@
 <img src="/pics/pic2.png" width = 800 height = 500 />
 </div>
 
-​                                      
-                                         <center>**程序操作流程图**</center>
+<center>程序操作流程图</center>
 
 
 
