@@ -175,6 +175,7 @@ class Potentiometer:
         self.data.update({"num_dt_R_11": num_dt_R_11, "num_dt_R_12": num_dt_R_12, "num_dt_R_21": num_dt_R_21, "num_dt_R_22": num_dt_R_22})
         self.data.update({"num_u_R_11": num_u_R_11, "num_u_R_12": num_u_R_12, "num_u_R_21": num_u_R_21, "num_u_R_22": num_u_R_22})
         # 仪器灵敏度及误差
+        #数字9应该改为从excel读取，各个同学偏差格数可能不一样
         num_S = 9 / abs(self.data['num_R_22_avg'] - self.data['num_R_23_avg']) * 1e3
         num_dt_S = 0.2 / num_S
         num_u_S = num_dt_S / sqrt(3)
@@ -182,7 +183,7 @@ class Potentiometer:
         # 合成不确定度
         num_u_Ex_Ex = sqrt(((1 / self.data['num_R_11_avg'] - 1 / (self.data['num_R_11_avg'] + self.data['num_R_21_avg'])) ** 2) * (num_u_R_11 ** 2) + (num_u_R_21 / (self.data['num_R_11_avg'] + self.data['num_R_21_avg'])) ** 2 + ((1 / self.data['num_R_12_avg'] - 1 / (self.data['num_R_12_avg'] + self.data['num_R_22_avg'])) ** 2) * (num_u_R_12 ** 2) + (num_u_R_22 / (self.data['num_R_12_avg'] + self.data['num_R_22_avg'])) ** 2)
         num_u_Ex = self.data['num_E_x'] * num_u_Ex_Ex
-        self.data.update({"num_u_Ex_Ex": num_u_Ex_Ex, "num_u_Ex": num_u_Ex_Ex})
+        self.data.update({"num_u_Ex_Ex": num_u_Ex_Ex, "num_u_Ex": num_u_Ex})
         # 输出带不确定度的最终结果: 不确定度保留一位有效数字, 物理量结果与不确定度首位有效数字对齐
         self.data['final_1'] = Method.final_expression(self.data['num_E_x'], self.data['num_u_Ex'])
         print(self.data['final_1'])
