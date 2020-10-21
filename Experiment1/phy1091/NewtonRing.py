@@ -7,12 +7,13 @@ from GeneralMethod.Report import Report
 
 
 class NewtonRing :
-    PREVIEW_FILENAME = "Preview.pdf"  # 预习报告模板文件的名称
-    DATA_SHEET_FILENAME = "data.xlsx"  # 数据填写表格的名称
-    REPORT_TEMPLATE_FILENAME = "Newton_empty.docx"  # 实验报告模板（未填数据）的名称
-    REPORT_OUTPUT_FILENAME = "../../Report/Experiment1/1091Report_2.docx"  # 最后生成实验报告的相对路径
+    
 
-    def __init__(self):
+    def __init__(self, cwd=""):
+        self.PREVIEW_FILENAME = cwd + "Preview.pdf"  # 预习报告模板文件的名称
+        self.DATA_SHEET_FILENAME = cwd + "data.xlsx"  # 数据填写表格的名称
+        self.REPORT_TEMPLATE_FILENAME = cwd + "Newton_empty.docx"  # 实验报告模板（未填数据）的名称
+        self.REPORT_OUTPUT_FILENAME = cwd + "../../Report/Experiment1/1091Report_2.docx"  # 最后生成实验报告的相对路径
         self.data = {}
         self.uncertainty = {}
         self.report_data = {}

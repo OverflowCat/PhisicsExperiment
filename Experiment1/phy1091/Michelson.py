@@ -21,13 +21,11 @@ class Michelson:
         "u_N", "u_lbd_lbd", "u_lbd",  # 不确定度的合成
         "final" # 最终结果
     ]
-
-    PREVIEW_FILENAME = "Preview.pdf"  # 预习报告模板文件的名称
-    DATA_SHEET_FILENAME = "data.xlsx"  # 数据填写表格的名称
-    REPORT_TEMPLATE_FILENAME = "Michelson_empty.docx"  # 实验报告模板（未填数据）的名称
-    REPORT_OUTPUT_FILENAME = "../../Report/Experiment1/1091Report-1.docx"  # 最后生成实验报告的相对路径
-
-    def __init__(self):
+    def __init__(self, cwd=""):
+        self.PREVIEW_FILENAME = cwd + "Preview.pdf"  # 预习报告模板文件的名称
+        self.DATA_SHEET_FILENAME = cwd + "data.xlsx"  # 数据填写表格的名称
+        self.REPORT_TEMPLATE_FILENAME = cwd + "Michelson_empty.docx"  # 实验报告模板（未填数据）的名称
+        self.REPORT_OUTPUT_FILENAME = cwd + "../../Report/Experiment1/1091Report-1.docx"  # 最后生成实验报告的相对路径
         self.data = {} # 存放实验中的各个物理量
         self.uncertainty = {} # 存放物理量的不确定度
         self.report_data = {} # 存放需要填入实验报告的
