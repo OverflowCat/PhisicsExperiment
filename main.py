@@ -73,9 +73,9 @@ if __name__ == '__main__':
 				print("\t\t2. 牛顿环干涉")
 				eidx = input("请输入子实验序号").strip()
 				if eidx == "1":
-					Phy1_1091_1.Michelson()
+					Phy1_1091_1.Michelson(cwd="Experiment1/phy1091/")
 				elif eidx == "2":
-					Phy1_1091_2.NewtonRing()
+					Phy1_1091_2.NewtonRing(cwd="Experiment1/phy1091/")
 			else:
 				print("很抱歉。暂时没有相应实验的数据处理程序。")
 		elif term == "2":
