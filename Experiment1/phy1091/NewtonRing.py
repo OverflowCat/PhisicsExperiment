@@ -9,7 +9,7 @@ from GeneralMethod.Report import Report
 class NewtonRing :
     
 
-    def __init__(self, cwd=""):
+    def __init__(self,cwd=""):
         self.PREVIEW_FILENAME = cwd + "Preview.pdf"  # 预习报告模板文件的名称
         self.DATA_SHEET_FILENAME = cwd + "data.xlsx"  # 数据填写表格的名称
         self.REPORT_TEMPLATE_FILENAME = cwd + "Newton_empty.docx"  # 实验报告模板（未填数据）的名称
@@ -111,12 +111,15 @@ class NewtonRing :
         u_b = sqrt(ua_b ** 2 + ub_b ** 2)
         u_R = u_b / (4 * lbd)
         R = self.data['R']
-        res, unc, pwr = Method.final_expression(R, u_R)
+        final_expression = Method.final_expression(R, u_R)
+        res=final_expression[0]
+        unc=final_expression[1]
+        pwr=final_expression[2]
         self.uncertainty['ua_b'] = ua_b
         self.uncertainty['ub_b'] = ub_b
         self.uncertainty['u_b'] = u_b
         self.uncertainty['u_R'] = u_R
-        self.data['final'] = "(%.0f ± %.0f)e%d" % (res, unc, int(pwr))
+        self.data['final'] = final_expression
         pass
 
     def fill_report(self):
