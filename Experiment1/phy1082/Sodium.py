@@ -3,7 +3,7 @@ from numpy import sqrt, abs, sin, cos, pi
 
 import sys
 # sys.path.append('../..') # 如果最终要从main.py调用，则删掉这句
-sys.path.append('./.')
+sys.path.append('../..')
 from GeneralMethod.PyCalcLib import Method, Simplified
 from GeneralMethod.Report import Report
 
@@ -76,8 +76,8 @@ class Sodium:
         add_item['L1'] = float(ws_biprism.cell_value(13, 3))
         add_item['L2'] = float(ws_biprism.cell_value(13, 4))
         add_item['E'] = float(ws_biprism.cell_value(13, 5))
-        add_item['b'] = float(ws_lloyd.cell_value(13, 5))
-        add_item['b1'] = float(ws_lloyd.cell_value(17, 5))
+        add_item['b'] = float(ws_biprism.cell_value(17, 5))
+        add_item['b1'] = float(ws_biprism.cell_value(23, 5))
         add_item['lambda_0'] = float(ws_biprism.cell_value(1, 8))
         add_item['delta_b_b'] = float(ws_biprism.cell_value(2, 8))
         add_item['delta_s'] = float(ws_biprism.cell_value(3, 8))
@@ -93,8 +93,8 @@ class Sodium:
         add_item['L1'] = float(ws_lloyd.cell_value(13, 3))
         add_item['L2'] = float(ws_lloyd.cell_value(13, 4))
         add_item['E'] = float(ws_lloyd.cell_value(13, 5))
-        add_item['b'] = float(ws_lloyd.cell_value(13, 5))
-        add_item['b1'] = float(ws_lloyd.cell_value(17, 5))
+        add_item['b'] = float(ws_lloyd.cell_value(17, 5))
+        add_item['b1'] = float(ws_lloyd.cell_value(23, 5))
         add_item['lambda_0'] = float(ws_lloyd.cell_value(1, 8))
         add_item['delta_b_b'] = float(ws_lloyd.cell_value(2, 8))
         add_item['delta_s'] = float(ws_lloyd.cell_value(3, 8))
