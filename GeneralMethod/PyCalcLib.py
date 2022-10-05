@@ -637,6 +637,7 @@ class Method:
     @staticmethod
     def a_uncertainty(a):
         abu = (Method.variance(a) / (len(a) - 1)) ** (1 / 2)
+        print(a, len(a), Method.variance(a))
         return abu
     '''
     逐差法求相邻数据的差值(与Fitting中的逐差法略有不同)
