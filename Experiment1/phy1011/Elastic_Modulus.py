@@ -79,17 +79,22 @@ class ElasticModulus:
         # 读取D表格
         D_raw_arr = []
         D_arr = []
-        for cidx in range(1, 7):
+        D_count = 10
+        # for cidx in range(1, 7):
+        for cidx in range(1, D_count + 1):
             D_raw_arr.append(float(ws.cell_value(9, cidx)))
             D_arr.append(float(ws.cell_value(10, cidx)))
-        D_raw_ave = float(ws.cell_value(9, 7))
-        D_ave = float(ws.cell_value(10, 7))
+        D_raw_ave = sum(D_raw_arr) / len(D_raw_arr) # float(ws.cell_value(9, 7))
+        D_ave = sum(D_arr) / len(D_arr) # float(ws.cell_value(10, 7))
         # 存储
         self.data.update({"list_D_raw":D_raw_arr, "list_D": D_arr})
         self.data.update({"num_D_raw": D_raw_ave, "num_D": D_ave})
+
         # 读取c表格
         m_arr = []; r_p_arr = []; r_n_arr = []; r_ave_arr = []
-        for cidx in range(1, 9):
+        c_count = 10
+        # for cidx in range(1, 9):
+        for cidx in range(1, c_count + 1):
             m_arr.append(float(ws.cell_value(14, cidx)))
             r_p_arr.append(float(ws.cell_value(15, cidx)))
             r_n_arr.append(float(ws.cell_value(16, cidx)))
@@ -140,14 +145,30 @@ class ElasticModulus:
 
     def calc_data(self):
         list_r = self.data['list_r']
-        list_dif_r, ave_c = Method.successive_diff(list_r)
+        list_dif_r, ave_c = Method.successive_diff(list_r) # ?????
+        print(list_r)
+        print(list_dif_r)
+        print(ave_c)
+        divide_by_5 = lambda x: x / 5
+        list_dif_r = list(map(divide_by_5, list_dif_r))
+        ave_c = divide_by_5(ave_c)
+
         self.data.update({"list_c": list_dif_r, "num_c": ave_c})
         # 计算弹性模量E
         m, g, L, H = self.data['num_m'], self.data['num_g'], self.data['num_L'], self.data['num_H']
         D, b, ave_c = self.data['num_D'], self.data['num_b'], self.data['num_c']
         PI = pi
-        E = (16 * 4 * m * g * L * H) / (PI * (D**2) * b * ave_c)
+        砝码重量系数 = 10
+        E = (16 * 砝码重量系数 * m * g * L * H) / (PI * (D**2) * b * ave_c)
+        分子 = f"16 × {砝码重量系数} × {m} × {g} × {L} × {H}"
+        分母 = f"π × ({D})² × {b} × {ave_c}"
         E *= 1e6 # 单位换算
+        print(f"""
+     {分子}
+E = {'-' * (2 + max(len(分子), len(分母)))}
+     {分母}
+  = {E}
+        """)
         self.data['num_E'] = E
 
         # 计算转动惯量
@@ -231,7 +252,7 @@ class ElasticModulus:
         u_c = self.uncertainty['u_c'] = sqrt(ua_c ** 2 + ub_c ** 2)
         # E的不确定度合成
         E = self.data['num_E']
-        u_E_E = self.uncertainty['u_E_E'] = sqrt((u_L/L)**2 + (u_H/H)**2 + 4 * (u_D/D)**2 + (u_b/b)**2 + (u_c/c)**2)
+        u_E_E = self.uncertainty['u_E_E'] = sqrt((u_L/L)**2 + (u_H/H)**2 + 10 * (u_D/D)**2 + (u_b/b)**2 + (u_c/c)**2)
         u_E = self.uncertainty['u_E'] = E * u_E_E
         # 最终结果表述
         self.data['final'] = Method.final_expression(E, u_E)

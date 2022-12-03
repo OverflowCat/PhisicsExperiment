@@ -10,6 +10,11 @@
 
 ## 安装与使用
 
+```sh
+poetry install
+poetry run python main.py
+```
+
 在windows系统里解压打包文件然后直接运行main.exe即可使用（exe文件运行较慢，请耐心等候），操作流程如下：
 
 * 选择实验所属
