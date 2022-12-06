@@ -130,8 +130,9 @@ class ElasticModulus:
 
         # 摆动时间
         time_meas = []
+        组数 = 5
         for row in range(5):
-            time_meas.append([float(i) for i in ws.row_values(row + 12, 3, 6)])
+            time_meas.append([float(i) for i in ws.row_values(row + 12, 3, 3 + 组数)])
 
         # 平行轴定理
         time_meas_para = []
@@ -188,6 +189,7 @@ E = {'-' * (2 + max(len(分子), len(分母)))}
 
         # 计算K
         I0 = 1 / 8 * basic_data[0]['m'] * (basic_data[0]['d'] ** 2) / 1e9
+        print("4*pi**2:", co, "I_0:", I0, "T_1:", time_meas[1][-1], "T_0:", time_meas[0][-1])
         K = co * I0 / (time_meas[1][-1] ** 2 - time_meas[0][-1] ** 2)
 
         co = K / co

@@ -77,6 +77,7 @@ class Oscillograph:
             list_d2.append(float(ws.cell_value(4, col)))
         list_f.append(float(ws.cell_value(7, 2)))
         list_f.append(float(ws.cell_value(7, 4)))
+        print("读取的数据：", list_d1, list_d2, list_f)
 
 
         self.data['list_d1'] = list_d1
@@ -114,12 +115,11 @@ class Oscillograph:
     '''
     # 对于数据处理简单的实验，可以根据此格式，先计算数据再算不确定度，若数据处理复杂也可每计算一个物理量就算一次不确定度
     def calc_uncertainty(self):
-        list_tmp = []
-        for i in self.data['list_dtx']:
-            list_tmp.append(i * 0.001 / 15)
+        list_tmp = [i for i in self.data['list_dtx']]
         # num_ua_d = sqrt( (Method.variance(self.data['list_d'])) / (10 * 9) )
+        print(list_tmp)
         num_ua_d = Method.a_uncertainty(list_tmp) 
-        # print(num_ua_d)
+        print(num_ua_d)
         num_ub1_d = 0.005 / sqrt(3)
         num_ub2_d = 0.1 / sqrt(3)
         num_u_d = sqrt(num_ua_d ** 2 + num_ub1_d ** 2 + num_ub2_d ** 2)
